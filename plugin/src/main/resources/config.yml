@@ -1,0 +1,243 @@
+# ═══════════════════════════════════════════════════════════════════════════
+#                            STRAFEHCF CONFIGURATION
+# ═══════════════════════════════════════════════════════════════════════════
+# Plugin HCF moderno y optimizado para Minecraft 1.21.8
+# Desarrollado específicamente para el servidor StrafePVP
+# Autor: mayk0l
+# Versión: 1.0.0-SNAPSHOT
+# ═══════════════════════════════════════════════════════════════════════════
+
+# Database Configuration
+database:
+  # Tipo de base de datos: H2 (archivo local) o POSTGRESQL (servidor)
+  type: "H2"
+  
+  # Configuración para PostgreSQL (solo si type = POSTGRESQL)
+  host: "localhost"
+  port: 5432
+  name: "strafehcf"
+  username: "strafehcf"
+  password: "changeme"
+  
+  # Pool de conexiones
+  pool:
+    maximum_pool_size: 10
+    minimum_idle: 5
+    connection_timeout: 30000  # 30 segundos
+    idle_timeout: 600000       # 10 minutos
+    max_lifetime: 1800000      # 30 minutos
+
+# Teams Configuration
+teams:
+  # Máximo número de miembros por equipo
+  max_members: 15
+  
+  # Máximo número de claims por equipo
+  max_claims: 1
+  
+  # Mínimo de miembros para poder reclamar territorio
+  min_members_to_claim: 3
+  
+  # Solo el líder puede disolver el equipo
+  leader_only_disband: true
+  
+  # Límite de aliados por equipo
+  ally_limit: 3
+  
+  # DTR (Deaths Till Raidable) Configuration
+  dtr:
+    # DTR inicial al crear un equipo
+    starting_dtr: 1.01
+    
+    # DTR máximo que puede alcanzar un equipo
+    max_dtr: 7.2
+    
+    # DTR perdido por cada muerte
+    loss_per_death: 1.0
+    
+    # Velocidad de regeneración de DTR (por tick)
+    regen_rate: 0.1
+    
+    # Intervalo de regeneración en minutos
+    regen_interval: 30
+    
+    # Tiempo de congelación después de una muerte (minutos)
+    freeze_time: 45
+
+# Combat Configuration
+combat:
+  # Duración del combat tag en segundos
+  tag_duration: 45
+  
+  # Tiempo para logout seguro en segundos
+  logout_timer: 10
+  
+  # Protección PvP para nuevos jugadores
+  pvp_protection:
+    enabled: true
+    duration: 30  # minutos
+  
+  # Cooldowns en segundos
+  cooldowns:
+    enderpearl: 16
+    golden_apple: 45
+    enchanted_golden_apple: 10800  # 3 horas
+  
+  # Nerf de strength
+  strength_nerf:
+    enabled: true
+    nerf_percentage: 33.5
+
+# Deathban Configuration
+deathban:
+  # Tiempo por defecto de deathban en minutos
+  default_time: 45
+  
+  # Arena para reducir deathban
+  arena:
+    enabled: true
+    world: "world"
+    spawn_location:
+      x: 0
+      y: 100
+      z: 0
+    # Minutos reducidos por kill en arena
+    kill_reduction_time: 5
+
+# Claims Configuration
+claims:
+  # Herramienta para reclamar (Material de Bukkit)
+  tool: "GOLDEN_HOE"
+  
+  # Costo por bloque en coins
+  cost_per_block: 0.5
+  
+  # Tamaño mínimo de claim (bloques)
+  min_size: 10
+  
+  # Tamaño máximo de claim (bloques)
+  max_size: 50
+  
+  # Distancia buffer entre claims
+  buffer_distance: 5
+  
+  # Overclaim configuration
+  overclaim:
+    enabled: true
+    only_when_raidable: true
+  
+  # Mundos donde se permite reclamar
+  allowed_worlds:
+    - "world"
+    - "world_nether"
+
+# KOTH (King of the Hill) Configuration
+koth:
+  # Tiempo para capturar en segundos
+  capture_time: 900  # 15 minutos
+  
+  # Radio de contest en bloques
+  contest_radius: 10
+  
+  # Máximo número de KOTHs simultáneos
+  max_simultaneous: 1
+  
+  # Recompensas (comandos a ejecutar)
+  rewards:
+    - "eco give %player% 1000"
+    - "give %player% diamond 32"
+    - "broadcast &6%player% &eha ganado el KOTH!"
+  
+  # Programación automática
+  schedule:
+    enabled: false
+    times:
+      - "12:00"
+      - "18:00"
+      - "00:00"
+
+# Classes Configuration
+classes:
+  # Clase Diamond (por defecto)
+  diamond:
+    enabled: true
+  
+  # Clase Archer
+  archer:
+    enabled: true
+    abilities:
+      bow_damage_multiplier: 1.25
+      speed_bonus: 1
+      tag_duration: 10  # segundos
+  
+  # Clase Bard
+  bard:
+    enabled: true
+    abilities:
+      energy: 120
+
+# Messages Configuration
+messages:
+  prefix: "&8[&6StrafeHCF&8] &7"
+  
+  # Combat messages
+  combat:
+    tagged: "%prefix%&cEstás en combate por &f%time% &csegundos."
+    untagged: "%prefix%&aYa no estás en combate."
+    logout_prevented: "%prefix%&cNo puedes desconectarte durante el combate."
+    logout_started: "%prefix%&eDesconectándose en &f%time% &esegundos..."
+    logout_cancelled: "%prefix%&cLogout cancelado por movimiento."
+  
+  # Team messages
+  team:
+    created: "%prefix%&aEquipo &f%team% &acreado correctamente."
+    disbanded: "%prefix%&cEquipo &f%team% &cdisuelto."
+    invited: "%prefix%&aHas sido invitado al equipo &f%team%&a."
+    joined: "%prefix%&f%player% &ase ha unido al equipo."
+    left: "%prefix%&f%player% &cha dejado el equipo."
+    kicked: "%prefix%&f%player% &cha sido expulsado del equipo."
+  
+  # Deathban messages
+  deathban:
+    banned: "%prefix%&cHas muerto y tienes deathban por &f%time%&c."
+    unbanned: "%prefix%&aTu deathban ha terminado. ¡Bienvenido de vuelta!"
+  
+  # Claims messages
+  claims:
+    created: "%prefix%&aClaim creado correctamente."
+    deleted: "%prefix%&cClaim eliminado."
+    enter: "&a⬆ Entrando: &f%team%"
+    exit: "&c⬇ Saliendo: &f%team%"
+
+# Performance Configuration
+performance:
+  # Cache settings
+  cache:
+    # Tiempo de vida del cache en minutos
+    ttl: 30
+    
+    # Tamaño máximo del cache
+    max_size: 1000
+  
+  # Database optimization
+  database_optimization:
+    # Batch size para operaciones masivas
+    batch_size: 100
+    
+    # Timeout para queries en segundos
+    query_timeout: 30
+  
+  # Async operations
+  async:
+    # Pool size para operaciones asíncronas
+    thread_pool_size: 4
+
+# Debug Configuration
+debug:
+  # Nivel de logging (FINE, INFO, WARNING, SEVERE)
+  log_level: "INFO"
+  
+  # Logging específico
+  log_sql_queries: false
+  log_cache_operations: false
+  log_async_operations: false

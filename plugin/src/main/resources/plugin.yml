@@ -1,0 +1,119 @@
+name: StrafeHCF
+version: '${project.version}'
+description: Plugin HCF moderno y optimizado para Minecraft 1.21.8
+main: net.strafepvp.hcf.StrafeHCFPlugin
+api-version: '1.21'
+author: mayk0l
+website: https://github.com/mayk0l/strafehcf
+
+# Dependencias opcionales - el plugin funcionará sin ellas pero con funcionalidad limitada
+softdepend:
+  - PlaceholderAPI
+  - HolographicDisplays
+  - WorldEdit
+
+load: STARTUP
+prefix: StrafeHCF
+
+# Comandos principales
+commands:
+  hcf:
+    description: Comando principal de StrafeHCF
+    usage: /<command> [subcommand] [args...]
+    aliases: [strafehcf, shcf]
+    permission: strafehcf.admin
+    permission-message: "§cNo tienes permisos para usar este comando."
+  
+  team:
+    description: Comandos de equipos
+    usage: /<command> [subcommand] [args...]
+    aliases: [t, faction, f]
+    permission: strafehcf.team.use
+    permission-message: "§cNo tienes permisos para usar comandos de equipos."
+  
+  logout:
+    description: Desconectarse de forma segura durante combate
+    usage: /<command>
+    permission: strafehcf.logout
+    permission-message: "§cNo tienes permisos para usar este comando."
+
+# Permisos
+permissions:
+  strafehcf.*:
+    description: Acceso completo a StrafeHCF
+    default: op
+    children:
+      strafehcf.admin: true
+      strafehcf.team.*: true
+      strafehcf.bypass.*: true
+  
+  strafehcf.admin:
+    description: Permisos de administrador
+    default: op
+    children:
+      strafehcf.reload: true
+      strafehcf.force.*: true
+      strafehcf.bypass.*: true
+  
+  strafehcf.team.*:
+    description: Todos los permisos de equipos
+    default: true
+    children:
+      strafehcf.team.use: true
+      strafehcf.team.create: true
+      strafehcf.team.disband: true
+      strafehcf.team.invite: true
+      strafehcf.team.kick: true
+      strafehcf.team.claim: true
+  
+  strafehcf.team.use:
+    description: Usar comandos básicos de equipos
+    default: true
+  
+  strafehcf.team.create:
+    description: Crear un equipo
+    default: true
+  
+  strafehcf.team.disband:
+    description: Disolver un equipo
+    default: true
+  
+  strafehcf.team.invite:
+    description: Invitar jugadores al equipo
+    default: true
+  
+  strafehcf.team.kick:
+    description: Expulsar jugadores del equipo
+    default: true
+  
+  strafehcf.team.claim:
+    description: Reclamar territorio para el equipo
+    default: true
+  
+  strafehcf.bypass.*:
+    description: Bypasear todas las restricciones
+    default: op
+    children:
+      strafehcf.bypass.combat: true
+      strafehcf.bypass.deathban: true
+      strafehcf.bypass.claims: true
+  
+  strafehcf.bypass.combat:
+    description: Bypasear el sistema de combate
+    default: op
+  
+  strafehcf.bypass.deathban:
+    description: Bypasear el deathban
+    default: op
+  
+  strafehcf.bypass.claims:
+    description: Bypasear protecciones de claims
+    default: op
+  
+  strafehcf.logout:
+    description: Usar el comando de logout seguro
+    default: true
+  
+  strafehcf.reload:
+    description: Recargar el plugin
+    default: op
